@@ -1,5 +1,6 @@
 package com.eslirodrigues.productivetime.ui.screen
 
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
@@ -21,9 +22,19 @@ fun TaskItemScreen(task: TaskEntity) {
         elevation = 2.dp,
         shape = RoundedCornerShape(corner = CornerSize(4.dp))
     ) {
-        Text(
-            modifier = Modifier.padding(10.dp),
-            text = task.task
-        )
+        Row {
+            Text(
+                modifier = Modifier.padding(10.dp),
+                text = task.task
+            )
+            Text(
+                modifier = Modifier.padding(start = 10.dp, top = 10.dp),
+                text = task.hour.toString()
+            )
+            Text(
+                modifier = Modifier.padding(top = 10.dp),
+                text = ":${task.min.toString()}"
+            )
+        }
     }
 }

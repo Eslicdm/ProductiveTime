@@ -31,6 +31,7 @@ object TaskModule {
     fun provideTaskDataSource(driver: SqlDriver): TaskDataSourceImpl {
         return TaskDataSourceImpl(TaskDatabase(driver))
     }
+
     @Singleton
     @Provides
     fun provideTaskRepository(taskDataSourceImpl: TaskDataSourceImpl): TaskRepository {

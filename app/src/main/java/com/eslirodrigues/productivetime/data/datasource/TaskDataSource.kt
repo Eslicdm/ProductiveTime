@@ -7,7 +7,7 @@ interface TaskDataSource {
 
     fun getAllTasks(): Flow<List<TaskEntity>>
 
-    suspend fun saveTask(id: Long?, task: String)
+    suspend fun saveTask(id: Long?, task: String, hour: Long, min: Long)
 
     suspend fun deleteTaskById(id: Long)
 }

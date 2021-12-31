@@ -1,13 +1,15 @@
 CREATE TABLE taskEntity (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    task TEXT NOT NULL
+    task TEXT NOT NULL,
+    hour INTEGER NOT NULL,
+    min INTEGER NOT NULL
 );
 
 getAllTasks:
 SELECT * FROM taskEntity;
 
 saveTask:
-INSERT OR REPLACE INTO taskEntity VALUES(?, ?);
+INSERT OR REPLACE INTO taskEntity(id, task, hour, min) VALUES(?, ?, ?, ?);
 
 deleteTaskById:
 DELETE FROM taskEntity WHERE id = :id;

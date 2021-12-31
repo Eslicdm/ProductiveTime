@@ -17,8 +17,8 @@ class TaskDataSourceImpl @Inject constructor(
         return queries.getAllTasks().asFlow().mapToList()
     }
 
-    override suspend fun saveTask(id: Long?, task: String) {
-        queries.saveTask(id = null, task)
+    override suspend fun saveTask(id: Long?, task: String, hour: Long, min: Long) {
+        queries.saveTask(id = null, task, hour, min)
     }
 
     override suspend fun deleteTaskById(id: Long) {

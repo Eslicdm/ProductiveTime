@@ -12,8 +12,8 @@ class TaskRepository @Inject constructor(
         return taskDataSourceImpl.getAllTasks()
     }
 
-    suspend fun saveTask(id: Long?, task: String) {
-        taskDataSourceImpl.saveTask(id = null, task)
+    suspend fun saveTask(id: Long?, task: String, hour: Long, min: Long) {
+        taskDataSourceImpl.saveTask(id = null, task, hour, min)
     }
 
     suspend fun deleteTaskById(id: Long) {

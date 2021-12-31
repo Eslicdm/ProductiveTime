@@ -81,6 +81,7 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:2.4.0-beta02"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
     implementation 'androidx.compose.animation:animation:1.0.5'
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
     // SQL Delight
     implementation "com.squareup.sqldelight:android-driver:1.5.2"

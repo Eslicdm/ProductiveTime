@@ -36,9 +36,9 @@ class TaskViewModel @Inject constructor(
             }
     }
 
-    fun saveTask(id: Long?, task: String) = viewModelScope.launch {
+    fun saveTask(id: Long?, task: String, hour: Long, min: Long) = viewModelScope.launch {
         if (task.isNotBlank()) {
-            taskRepository.saveTask(id, task)
+            taskRepository.saveTask(id, task, hour, min)
         }
     }
 

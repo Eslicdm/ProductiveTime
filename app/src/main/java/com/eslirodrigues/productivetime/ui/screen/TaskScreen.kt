@@ -18,9 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.eslirodrigues.productivetime.R
-import com.eslirodrigues.productivetime.core.ScreenNav
 import com.eslirodrigues.productivetime.core.TaskState
 import com.eslirodrigues.productivetime.ui.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
@@ -28,17 +26,18 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 @Composable
 fun TaskScreen(
-    navController: NavController,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
 
+    val showAddTaskAlertDialog = remember { mutableStateOf(false) }
+
     Scaffold(
         scaffoldState = scaffoldState,
         floatingActionButton = {
             FloatingActionButton(onClick = {
-                navController.navigate(ScreenNav.AddTask.route)
+                showAddTaskAlertDialog.value = !showAddTaskAlertDialog.value
             }) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -48,6 +47,7 @@ fun TaskScreen(
             }
         }
     ) {
+        if(showAddTaskAlertDialog.value) AddTaskAlertDialog(showAddTaskAlertDialog)
         when(val result = viewModel.response.value) {
             is TaskState.Success -> {
                 LazyColumn {
@@ -63,7 +63,7 @@ fun TaskScreen(
                                         )
                                         when(snackbarResult) {
                                             SnackbarResult.Dismissed -> Log.d("Snackbar", "Dismissed")
-                                            SnackbarResult.ActionPerformed -> viewModel.saveTask(task.id, task.task)
+                                            SnackbarResult.ActionPerformed -> viewModel.saveTask(task.id, task.task, task.hour, task.min)
                                         }
                                     }
                                 }
