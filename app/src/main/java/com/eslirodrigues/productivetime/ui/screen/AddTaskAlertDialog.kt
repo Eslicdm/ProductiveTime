@@ -47,7 +47,8 @@ fun AddTaskAlertDialog(
                     Icon(
                         Icons.Default.AddAlarm,
                         tint = Color.White,
-                        contentDescription = stringResource(id = R.string.add_task))
+                        contentDescription = stringResource(id = R.string.add_task)
+                    )
                     Spacer(modifier = Modifier.width(5.dp))
                     Text(
                         text = stringResource(id = R.string.add_task),
@@ -64,7 +65,7 @@ fun AddTaskAlertDialog(
                     modifier = Modifier.padding(horizontal = 10.dp),
                     value = inputTask,
                     onValueChange = {
-                        inputTask = it
+                        if (it.length <= 24) inputTask = it
                     },
                     label = {
                         Text(
@@ -72,7 +73,8 @@ fun AddTaskAlertDialog(
                             color = Color.White,
                             textAlign = TextAlign.Center
                         )
-                    }
+                    },
+                    maxLines = 1
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Row(
@@ -82,7 +84,7 @@ fun AddTaskAlertDialog(
                         modifier = Modifier.width(50.dp),
                         value = hour,
                         onValueChange = {
-                            hour = it
+                            if (it.length <= 2) hour = it
                         },
                         label = {
                             Text(
@@ -93,7 +95,8 @@ fun AddTaskAlertDialog(
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number
-                        )
+                        ),
+                        maxLines = 1
                     )
                     Text(
                         modifier = Modifier.padding(top = 19.dp, start = 5.dp, end = 5.dp),
@@ -105,7 +108,7 @@ fun AddTaskAlertDialog(
                         modifier = Modifier.width(50.dp),
                         value = min,
                         onValueChange = {
-                            min = it
+                            if (it.length <= 2) min = it
                         },
                         label = {
                             Text(
@@ -116,7 +119,8 @@ fun AddTaskAlertDialog(
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Number
-                        )
+                        ),
+                        maxLines = 1
                     )
                 }
             }
