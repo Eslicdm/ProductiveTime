@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.eslirodrigues.productivetime.core.TaskState
+import com.eslirodrigues.productivetime.core.toTask
 import com.eslirodrigues.productivetime.data.repository.TaskRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -31,8 +32,8 @@ class TaskViewModel @Inject constructor(
             }
             .catch {
                 response.value = TaskState.Failure(it)
-            }.collect {
-                response.value = TaskState.Success(it)
+            }.collect { it ->
+                response.value = TaskState.Success(it.map { it.toTask() })
             }
     }
 

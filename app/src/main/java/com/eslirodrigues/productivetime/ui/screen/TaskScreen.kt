@@ -11,7 +11,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,11 +24,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.eslirodrigues.productivetime.R
 import com.eslirodrigues.productivetime.core.TaskState
 import com.eslirodrigues.productivetime.ui.viewmodel.TaskViewModel
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
+@Destination(start = true)
 @Composable
 fun TaskScreen(
+    navigator: DestinationsNavigator,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -94,7 +101,7 @@ fun TaskScreen(
                                 }
                             },
                             dismissContent = {
-                                TaskItemScreen(task = task)
+                                TaskItemScreen(task = task, navigator)
                             },
                             directions = setOf(DismissDirection.EndToStart)
                         )
