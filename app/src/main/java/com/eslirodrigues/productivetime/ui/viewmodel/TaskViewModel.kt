@@ -33,7 +33,8 @@ class TaskViewModel @Inject constructor(
             .catch {
                 response.value = TaskState.Failure(it)
             }.collect { it ->
-                response.value = TaskState.Success(it.map { it.toTask() })
+                val task = it.map { it.toTask()}
+                response.value = TaskState.Success(task)
             }
     }
 
