@@ -1,5 +1,6 @@
 package com.eslirodrigues.productivetime.ui.screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -10,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +32,8 @@ fun AddTaskAlertDialog(
     var inputTask by remember { mutableStateOf("") }
     var hour by remember { mutableStateOf("") }
     var min by remember { mutableStateOf("") }
+
+    val context = LocalContext.current
 
     AlertDialog(
         modifier = Modifier
@@ -65,7 +69,7 @@ fun AddTaskAlertDialog(
                     modifier = Modifier.padding(horizontal = 10.dp),
                     value = inputTask,
                     onValueChange = {
-                        if (it.length <= 24) inputTask = it
+                        if (it.length <= 80) inputTask = it
                     },
                     label = {
                         Text(
@@ -78,7 +82,9 @@ fun AddTaskAlertDialog(
                 )
                 Spacer(modifier = Modifier.padding(5.dp))
                 Row(
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = 60.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 60.dp)
                 ) {
                     OutlinedTextField(
                         modifier = Modifier.width(50.dp),
@@ -135,8 +141,12 @@ fun AddTaskAlertDialog(
                         bottom = 5.dp
                     ),
                 onClick = {
-                    viewModel.saveTask(id = null, inputTask, hour.toLong(), min.toLong())
-                    showAddTaskAlertDialog.value = false
+                    if (inputTask.isBlank() || hour.isBlank() || min.isBlank()) {
+                        Toast.makeText(context, R.string.fill_out_all_fields, Toast.LENGTH_SHORT).show()
+                    } else {
+                        viewModel.saveTask(id = null, inputTask, hour.toLong(), min.toLong())
+                        showAddTaskAlertDialog.value = false
+                    }
                 }
             ) {
                 Text(
