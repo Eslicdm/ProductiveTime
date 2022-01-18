@@ -10,4 +10,6 @@
     <string name="min">min</string>
     <string name="start_task">Start task</string>
     <string name="fill_out_all_fields">Fill out all fields</string>
+    <string name="back">back</string>
+    <string name="task_timer">Task Timer</string>
 </resources>
