@@ -1,7 +1,9 @@
 package com.eslirodrigues.productivetime.di
 
 import android.app.Application
+import android.content.Context
 import com.eslirodrigues.productivetime.TaskDatabase
+import com.eslirodrigues.productivetime.core.notification.TaskNotification
 import com.eslirodrigues.productivetime.data.datasource.TaskDataSourceImpl
 import com.eslirodrigues.productivetime.data.repository.TaskRepository
 import com.squareup.sqldelight.android.AndroidSqliteDriver
@@ -9,6 +11,7 @@ import com.squareup.sqldelight.db.SqlDriver
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -36,5 +39,11 @@ object TaskModule {
     @Provides
     fun provideTaskRepository(taskDataSourceImpl: TaskDataSourceImpl): TaskRepository {
         return TaskRepository(taskDataSourceImpl)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTaskNotification() : TaskNotification {
+        return TaskNotification()
     }
 }

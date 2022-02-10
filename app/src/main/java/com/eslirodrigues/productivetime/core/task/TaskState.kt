@@ -1,4 +1,4 @@
-package com.eslirodrigues.productivetime.core
+package com.eslirodrigues.productivetime.core.task
 
 import com.eslirodrigues.productivetime.data.datasource.Task
 

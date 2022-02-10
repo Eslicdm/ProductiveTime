@@ -14,7 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.eslirodrigues.productivetime.R
-import com.eslirodrigues.productivetime.core.TimeFormatExt.timeFormat
+import com.eslirodrigues.productivetime.core.timer.TimeFormatExt.timeFormat
 import com.eslirodrigues.productivetime.data.datasource.Task
 import com.eslirodrigues.productivetime.ui.screen.destinations.TaskTimerScreenDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

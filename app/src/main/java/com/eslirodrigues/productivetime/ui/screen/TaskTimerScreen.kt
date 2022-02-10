@@ -1,5 +1,6 @@
 package com.eslirodrigues.productivetime.ui.screen
 
+import android.content.Context
 import android.os.CountDownTimer
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -17,13 +18,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.eslirodrigues.productivetime.R
-import com.eslirodrigues.productivetime.core.TimeFormatExt.timeFormat
+import com.eslirodrigues.productivetime.core.timer.TimeFormatExt.timeFormat
 import com.eslirodrigues.productivetime.data.datasource.Task
 import com.eslirodrigues.productivetime.ui.theme.LightOrange
+import com.eslirodrigues.productivetime.ui.viewmodel.TimerViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import java.util.concurrent.TimeUnit
@@ -41,12 +45,15 @@ private var isPlaying: MutableState<Boolean>? = null
 @Composable
 fun TaskTimerScreen(
     task: Task,
-    navigator: DestinationsNavigator
+    navigator: DestinationsNavigator,
+    viewModel: TimerViewModel = hiltViewModel()
 ) {
     BackHandler {
         resetTimer()
         navigator.popBackStack()
     }
+
+    val context = LocalContext.current
 
     isPlaying = remember { mutableStateOf(false) }
 
@@ -93,12 +100,15 @@ fun TaskTimerScreen(
                 Icons.Default.Replay,
                 contentDescription = stringResource(id = R.string.add_task),
                 tint = Color.White,
+                modifier = Modifier.size(50.dp)
             )
         }
         Spacer(modifier = Modifier.padding(20.dp))
         IconButton(
             onClick = {
-                if (isPlaying!!.value) stopTimer() else startTimer()
+                if (isPlaying!!.value) stopTimer() else startTimer(
+                    viewModel, context, "Timer", task.task
+                )
                 isPlaying!!.value = !isPlaying!!.value
             },
             modifier = Modifier.size(100.dp)
@@ -122,7 +132,7 @@ fun TaskTimerScreen(
     }
 }
 
-fun startTimer() {
+fun startTimer(viewModel: TimerViewModel, context: Context, textTitle: String, textContent: String) {
     countDownTimer = object : CountDownTimer(timeLeft!!.value, 1000L) {
         override fun onTick(p0: Long) {
             textTimer!!.value = p0.timeFormat()
@@ -131,6 +141,7 @@ fun startTimer() {
 
         override fun onFinish() {
             textTimer!!.value = initialTotalTimeInMillis!!.timeFormat()
+            viewModel.feedNotification(context, textTitle, textContent)
         }
     }.start()
 }

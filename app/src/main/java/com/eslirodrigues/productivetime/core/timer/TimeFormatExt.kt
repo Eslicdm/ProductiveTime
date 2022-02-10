@@ -1,4 +1,4 @@
-package com.eslirodrigues.productivetime.core
+package com.eslirodrigues.productivetime.core.timer
 
 import java.util.concurrent.TimeUnit
 
